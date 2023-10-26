@@ -1,18 +1,28 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import "./App.css";
 
 function App() {
   const [player1Time, setPlayer1Time] = useState(50);
   const [player2Time, setPlayer2Time] = useState(50);
+  const [player1Increment, setPlayer1Increment] = useState(0);
+  const [player2Increment, setPlayer2Increment] = useState(0);
   const [activePlayer, setActivePlayer] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
 
-  const handlePlayer1TimeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayer1Time(parseInt(event.target.value, 10));
+  const handlePlayer1TimeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPlayer1Time(parseInt(e.target.value, 10));
   };
 
-  const handlePlayer2TimeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlayer2Time(parseInt(event.target.value, 10));
+  const handlePlayer2TimeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPlayer2Time(parseInt(e.target.value, 10));
+  };
+
+  const handlePlayer1IncrementChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPlayer1Increment(parseInt(e.target.value, 10));
+  };
+
+  const handlePlayer2IncrementChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setPlayer2Increment(parseInt(e.target.value, 10));
   };
 
   useEffect(() => {
@@ -39,6 +49,12 @@ function App() {
   };
 
   const switchPlayer = () => {
+    if (activePlayer === 1) {
+      setPlayer1Time((prev) => prev + player1Increment);
+    } else {
+      setPlayer2Time((prev) => prev + player2Increment);
+    }
+
     setActivePlayer(activePlayer === 1 ? 2 : 1);
   };
 
@@ -75,11 +91,27 @@ function App() {
           />
         </div>
         <div className="time-input">
+          Player 1 Increment:
+          <input
+            type="number"
+            value={player1Increment}
+            onChange={handlePlayer1IncrementChange}
+          />
+        </div>
+        <div className="time-input">
           Player 2 Initial Time:
           <input
             type="number"
             value={player2Time}
             onChange={handlePlayer2TimeChange}
+          />
+        </div>
+        <div className="time-input">
+          Player 2 Increment:
+          <input
+            type="number"
+            value={player2Increment}
+            onChange={handlePlayer2IncrementChange}
           />
         </div>
         <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
