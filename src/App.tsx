@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import "./App.css";
 
 function App() {
@@ -8,6 +8,11 @@ function App() {
   const [player2Increment, setPlayer2Increment] = useState(0);
   const [activePlayer, setActivePlayer] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(true);
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const handlePlayer1TimeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayer1Time(parseInt(e.target.value, 10));
@@ -81,41 +86,49 @@ function App() {
           Player 2: {player2Time}
         </div>
       </div>
-      <div className="controls">
-        <div className="time-input">
-          Player 1 Initial Time:
-          <input
-            type="number"
-            value={player1Time}
-            onChange={handlePlayer1TimeChange}
-          />
-        </div>
-        <div className="time-input">
-          Player 1 Increment:
-          <input
-            type="number"
-            value={player1Increment}
-            onChange={handlePlayer1IncrementChange}
-          />
-        </div>
-        <div className="time-input">
-          Player 2 Initial Time:
-          <input
-            type="number"
-            value={player2Time}
-            onChange={handlePlayer2TimeChange}
-          />
-        </div>
-        <div className="time-input">
-          Player 2 Increment:
-          <input
-            type="number"
-            value={player2Increment}
-            onChange={handlePlayer2IncrementChange}
-          />
-        </div>
+      <div>
         <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
         <button onClick={resetClock}>Reset</button>
+
+        {modalIsOpen && (
+          <div className="modal">
+            <div className="controls">
+              <div className="time-input">
+                Player 1 Initial Time:
+                <input
+                  type="number"
+                  value={player1Time}
+                  onChange={handlePlayer1TimeChange}
+                />
+              </div>
+              <div className="time-input">
+                Player 1 Increment:
+                <input
+                  type="number"
+                  value={player1Increment}
+                  onChange={handlePlayer1IncrementChange}
+                />
+              </div>
+              <div className="time-input">
+                Player 2 Initial Time:
+                <input
+                  type="number"
+                  value={player2Time}
+                  onChange={handlePlayer2TimeChange}
+                />
+              </div>
+              <div className="time-input">
+                Player 2 Increment:
+                <input
+                  type="number"
+                  value={player2Increment}
+                  onChange={handlePlayer2IncrementChange}
+                />
+              </div>
+            </div>
+            <button onClick={closeModal}>Submit</button>
+          </div>
+        )}
       </div>
     </div>
   );
