@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import "./App.css";
 
 function App() {
@@ -6,6 +6,14 @@ function App() {
   const [player2Time, setPlayer2Time] = useState(50);
   const [activePlayer, setActivePlayer] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
+
+  const handlePlayer1TimeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPlayer1Time(parseInt(event.target.value, 10));
+  };
+
+  const handlePlayer2TimeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPlayer2Time(parseInt(event.target.value, 10));
+  };
 
   useEffect(() => {
     let timer: any;
@@ -36,8 +44,8 @@ function App() {
 
   const resetClock = () => {
     setIsRunning(false);
-    setPlayer1Time(300);
-    setPlayer2Time(300);
+    setPlayer1Time(50);
+    setPlayer2Time(50);
     setActivePlayer(1);
   };
 
@@ -58,6 +66,22 @@ function App() {
         </div>
       </div>
       <div className="controls">
+        <div className="time-input">
+          Player 1 Initial Time:
+          <input
+            type="number"
+            value={player1Time}
+            onChange={handlePlayer1TimeChange}
+          />
+        </div>
+        <div className="time-input">
+          Player 2 Initial Time:
+          <input
+            type="number"
+            value={player2Time}
+            onChange={handlePlayer2TimeChange}
+          />
+        </div>
         <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
         <button onClick={resetClock}>Reset</button>
       </div>
