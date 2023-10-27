@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import "./App.css";
-import TimeInput from "./components/TimeInput";
-import Timer from "./components/Timer";
+import Clock from "./components/Clock";
+import ConditionsModal from "./components/ConditionsModal";
 
 function App() {
   const [player1Time, setPlayer1Time] = useState(50);
@@ -11,10 +11,6 @@ function App() {
   const [activePlayer, setActivePlayer] = useState(1);
   const [isRunning, setIsRunning] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(true);
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
 
   const handlePlayer1TimeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPlayer1Time(parseInt(e.target.value, 10));
@@ -51,10 +47,6 @@ function App() {
     };
   }, [isRunning, activePlayer, player1Time, player2Time]);
 
-  const toggleClock = () => {
-    setIsRunning(!isRunning);
-  };
-
   const switchPlayer = () => {
     if (activePlayer === 1) {
       setPlayer1Time((prev) => prev + player1Increment);
@@ -74,53 +66,28 @@ function App() {
 
   return (
     <div>
-      <div className="clock">
-        <Timer
-          activePlayer={activePlayer}
-          switchPlayer={switchPlayer}
-          playerTime={player1Time}
-          isActive={activePlayer === 1}
+      {modalIsOpen ? (
+        <ConditionsModal
+          player1Time={player1Time}
+          handlePlayer1TimeChange={handlePlayer1TimeChange}
+          player1Increment={player1Increment}
+          handlePlayer1IncrementChange={handlePlayer1IncrementChange}
+          player2Time={player2Time}
+          handlePlayer2TimeChange={handlePlayer2TimeChange}
+          player2Increment={player2Increment}
+          handlePlayer2IncrementChange={handlePlayer2IncrementChange}
+          closeModal={() => setModalIsOpen(false)}
         />
-
-        <Timer
+      ) : (
+        <Clock
           activePlayer={activePlayer}
+          player1Time={player1Time}
+          player2Time={player2Time}
           switchPlayer={switchPlayer}
-          playerTime={player2Time}
-          isActive={activePlayer === 2}
+          resetClock={resetClock}
+          toggleClock={() => setIsRunning(!isRunning)}
+          isRunning={isRunning}
         />
-      </div>
-      <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
-      <button onClick={resetClock}>Reset</button>
-
-      {modalIsOpen && (
-        <div className="modal">
-          <div className="controls">
-            <TimeInput
-              text="Player 1 Initial time:"
-              value={player1Time}
-              onChange={handlePlayer1TimeChange}
-            />
-
-            <TimeInput
-              text="Player 1 Increment:"
-              value={player1Increment}
-              onChange={handlePlayer1IncrementChange}
-            />
-
-            <TimeInput
-              text="Player 2 Initial Time:"
-              value={player2Time}
-              onChange={handlePlayer2TimeChange}
-            />
-
-            <TimeInput
-              text="Player 2 Increment:"
-              value={player2Increment}
-              onChange={handlePlayer2IncrementChange}
-            />
-          </div>
-          <button onClick={closeModal}>Submit</button>
-        </div>
       )}
     </div>
   );
