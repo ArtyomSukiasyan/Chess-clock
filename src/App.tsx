@@ -1,6 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import "./App.css";
 import TimeInput from "./components/TimeInput";
+import Timer from "./components/Timer";
 
 function App() {
   const [player1Time, setPlayer1Time] = useState(50);
@@ -74,22 +75,23 @@ function App() {
   return (
     <div>
       <div className="clock">
-        <div
-          className={`timer ${activePlayer === 1 ? "active" : ""}`}
-          onClick={switchPlayer}
-        >
-          Player 1: {player1Time}
-        </div>
-        <div
-          className={`timer ${activePlayer === 2 ? "active" : ""}`}
-          onClick={switchPlayer}
-        >
-          Player 2: {player2Time}
-        </div>
+        <Timer
+          activePlayer={activePlayer}
+          switchPlayer={switchPlayer}
+          playerTime={player1Time}
+          isActive={activePlayer === 1}
+        />
+
+        <Timer
+          activePlayer={activePlayer}
+          switchPlayer={switchPlayer}
+          playerTime={player2Time}
+          isActive={activePlayer === 2}
+        />
       </div>
       <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
       <button onClick={resetClock}>Reset</button>
-      
+
       {modalIsOpen && (
         <div className="modal">
           <div className="controls">
