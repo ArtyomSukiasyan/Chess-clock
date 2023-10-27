@@ -32,9 +32,11 @@ function App() {
     let timer: any;
     if (isRunning) {
       timer = setInterval(() => {
-        if (activePlayer === 1 && player1Time > 0) {
+        const isHaveTimes = player1Time > 0 && player2Time > 0;
+
+        if (activePlayer === 1 && isHaveTimes) {
           setPlayer1Time(player1Time - 1);
-        } else if (activePlayer === 2 && player2Time > 0) {
+        } else if (activePlayer === 2 && isHaveTimes) {
           setPlayer2Time(player2Time - 1);
         }
       }, 1000);
