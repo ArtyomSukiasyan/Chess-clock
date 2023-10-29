@@ -1,8 +1,6 @@
-import PauseIcon from "../assets/icons/Pause";
-import SettingsIcon from "../assets/icons/Settings";
-import StartIcon from "../assets/icons/Start";
-import { IClock } from "../models/Clock";
+import Buttons from "./Buttons";
 import Timer from "./Timer";
+import { IClock } from "../models/Clock";
 
 export default function Clock({
   activePlayer,
@@ -22,14 +20,12 @@ export default function Clock({
         isActive={activePlayer === "white"}
       />
 
-      <div className="icons">
-        <div className="icon" onClick={toggleClock}>
-          {isRunning ? <PauseIcon /> : <StartIcon />}
-        </div>
-        <div className="icon" onClick={resetClock}>
-          <SettingsIcon />
-        </div>
-      </div>
+      <Buttons
+        isRunning={isRunning}
+        resetClock={resetClock}
+        toggleClock={toggleClock}
+      />
+
       <Timer
         id="black"
         switchPlayer={switchPlayer}
