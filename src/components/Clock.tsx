@@ -13,18 +13,20 @@ export default function Clock({
   return (
     <div className="clock">
       <Timer
+        id="white"
         switchPlayer={switchPlayer}
         playerTime={player1Time}
-        isActive={activePlayer === 1}
+        isActive={activePlayer === "white"}
       />
 
       <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
       <button onClick={resetClock}>Reset</button>
 
       <Timer
+        id="black"
         switchPlayer={switchPlayer}
         playerTime={player2Time}
-        isActive={activePlayer === 2}
+        isActive={activePlayer === "black"}
       />
     </div>
   );

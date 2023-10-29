@@ -1,8 +1,10 @@
+import { MouseEvent } from "react";
+
 export interface IClock {
-  activePlayer: number;
+  activePlayer: "white" | "black";
   player1Time: number;
   player2Time: number;
-  switchPlayer: () => void;
+  switchPlayer: (e: MouseEvent<HTMLDivElement>) => void;
   toggleClock: () => void;
   resetClock: () => void;
   isRunning: boolean;
