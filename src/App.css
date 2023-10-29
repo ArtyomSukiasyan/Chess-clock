@@ -34,7 +34,17 @@
 .controls {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   margin-top: 20px;
+}
+
+.player-conditions {
+  margin: 24px;
+}
+
+.time-input {
+  margin: 24px;
 }
 
 button {

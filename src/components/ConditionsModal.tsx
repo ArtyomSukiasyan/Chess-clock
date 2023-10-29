@@ -15,29 +15,35 @@ export default function ConditionsModal({
   return (
     <div className="modal">
       <div className="controls">
-        <TimeInput
-          text="Player 1 Initial time:"
-          value={player1Time}
-          onChange={handlePlayer1TimeChange}
-        />
+        <div className="player-conditions">
+          <h2>Player 1</h2>
+          <TimeInput
+            text="Initial time (sec):"
+            value={player1Time}
+            onChange={handlePlayer1TimeChange}
+          />
 
-        <TimeInput
-          text="Player 1 Increment:"
-          value={player1Increment}
-          onChange={handlePlayer1IncrementChange}
-        />
+          <TimeInput
+            text="Increment (sec):"
+            value={player1Increment}
+            onChange={handlePlayer1IncrementChange}
+          />
+        </div>
 
-        <TimeInput
-          text="Player 2 Initial Time:"
-          value={player2Time}
-          onChange={handlePlayer2TimeChange}
-        />
+        <div className="player-conditions">
+          <h2>Player 2</h2>
+          <TimeInput
+            text="Initial Time (sec):"
+            value={player2Time}
+            onChange={handlePlayer2TimeChange}
+          />
 
-        <TimeInput
-          text="Player 2 Increment:"
-          value={player2Increment}
-          onChange={handlePlayer2IncrementChange}
-        />
+          <TimeInput
+            text="Increment (sec):"
+            value={player2Increment}
+            onChange={handlePlayer2IncrementChange}
+          />
+        </div>
       </div>
       <button onClick={closeModal}>Submit</button>
     </div>
