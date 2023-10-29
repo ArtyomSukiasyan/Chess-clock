@@ -1,3 +1,6 @@
+import PauseIcon from "../assets/icons/Pause";
+import SettingsIcon from "../assets/icons/Settings";
+import StartIcon from "../assets/icons/Start";
 import { IClock } from "../models/Clock";
 import Timer from "./Timer";
 
@@ -19,9 +22,14 @@ export default function Clock({
         isActive={activePlayer === "white"}
       />
 
-      <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
-      <button onClick={resetClock}>Reset</button>
-
+      <div className="icons">
+        <div className="icon" onClick={toggleClock}>
+          {isRunning ? <PauseIcon /> : <StartIcon />}
+        </div>
+        <div className="icon" onClick={resetClock}>
+          <SettingsIcon />
+        </div>
+      </div>
       <Timer
         id="black"
         switchPlayer={switchPlayer}

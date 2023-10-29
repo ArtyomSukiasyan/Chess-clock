@@ -11,7 +11,7 @@
 }
 
 .timer {
-  width: 45%;
+  width: 47%;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -47,14 +47,19 @@
   margin: 24px;
 }
 
-button {
+.icons {
+  width: 6%;
+}
+
+.icon {
   font-size: 16px;
   padding: 10px 20px;
-  margin: 0 10px;
-  background-color: #333;
-  color: white;
+  margin: 8px;
   border: none;
   cursor: pointer;
+  background-color: #1a1146;
+  fill: #f0f3fb;
+  text-align: center;
 }
 
 button:hover {

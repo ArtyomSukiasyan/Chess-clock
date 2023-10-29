@@ -4,8 +4,8 @@ import Clock from "./components/Clock";
 import ConditionsModal from "./components/ConditionsModal";
 
 function App() {
-  const [player1Time, setPlayer1Time] = useState(50);
-  const [player2Time, setPlayer2Time] = useState(50);
+  const [player1Time, setPlayer1Time] = useState(0);
+  const [player2Time, setPlayer2Time] = useState(0);
   const [player1Increment, setPlayer1Increment] = useState(0);
   const [player2Increment, setPlayer2Increment] = useState(0);
   const [activePlayer, setActivePlayer] = useState<"white" | "black">("white");
@@ -67,8 +67,7 @@ function App() {
 
   const resetClock = () => {
     setIsRunning(false);
-    setPlayer1Time(50);
-    setPlayer2Time(50);
+    setModalIsOpen(true);
     setActivePlayer("white");
   };
 
