@@ -1,17 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .clock {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  margin-top: 20px;
 }
 
 .timer {
+  width: 45%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 24px;
-  padding: 10px;
-  margin: 10px;
   border: 2px solid #333;
   cursor: pointer;
+}
+
+.timer-value {
+  transform: rotate(90deg);
 }
 
 .timer.active {

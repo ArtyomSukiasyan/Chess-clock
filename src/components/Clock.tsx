@@ -16,17 +16,16 @@ export default function Clock({
         switchPlayer={switchPlayer}
         playerTime={player1Time}
         isActive={activePlayer === 1}
-        player={1}
       />
+
+      <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
+      <button onClick={resetClock}>Reset</button>
 
       <Timer
         switchPlayer={switchPlayer}
         playerTime={player2Time}
         isActive={activePlayer === 2}
-        player={2}
       />
-      <button onClick={toggleClock}>{isRunning ? "Pause" : "Start"}</button>
-      <button onClick={resetClock}>Reset</button>
     </div>
   );
 }
