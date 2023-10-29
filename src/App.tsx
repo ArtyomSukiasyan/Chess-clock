@@ -61,16 +61,16 @@ function App() {
       {modalIsOpen ? (
         <ConditionsModal
           player1Time={player1Time}
-          player1TimeChange={(e) => setPlayer1Time(parseInt(e.target.value))}
+          player1TimeChange={(e) => setPlayer1Time(Number(e.target.value))}
           player1Increment={player1Increment}
           player1IncrementChange={(e) =>
-            setPlayer1Increment(parseInt(e.target.value))
+            setPlayer1Increment(Number(e.target.value))
           }
           player2Time={player2Time}
-          player2TimeChange={(e) => setPlayer2Time(parseInt(e.target.value))}
+          player2TimeChange={(e) => setPlayer2Time(Number(e.target.value))}
           player2Increment={player2Increment}
           player2IncrementChange={(e) =>
-            setPlayer2Increment(parseInt(e.target.value))
+            setPlayer2Increment(Number(e.target.value))
           }
           closeModal={() => setModalIsOpen(false)}
         />
