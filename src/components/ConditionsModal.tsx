@@ -3,13 +3,13 @@ import TimeInput from "./TimeInput";
 
 export default function ConditionsModal({
   player1Time,
-  handlePlayer1TimeChange,
+  player1TimeChange,
   player1Increment,
-  handlePlayer1IncrementChange,
+  player1IncrementChange,
   player2Time,
-  handlePlayer2TimeChange,
+  player2TimeChange,
   player2Increment,
-  handlePlayer2IncrementChange,
+  player2IncrementChange,
   closeModal,
 }: IConditionsModal) {
   return (
@@ -20,13 +20,13 @@ export default function ConditionsModal({
           <TimeInput
             text="Initial time (sec):"
             value={player1Time}
-            onChange={handlePlayer1TimeChange}
+            onChange={player1TimeChange}
           />
 
           <TimeInput
             text="Increment (sec):"
             value={player1Increment}
-            onChange={handlePlayer1IncrementChange}
+            onChange={player1IncrementChange}
           />
         </div>
 
@@ -35,13 +35,13 @@ export default function ConditionsModal({
           <TimeInput
             text="Initial Time (sec):"
             value={player2Time}
-            onChange={handlePlayer2TimeChange}
+            onChange={player2TimeChange}
           />
 
           <TimeInput
             text="Increment (sec):"
             value={player2Increment}
-            onChange={handlePlayer2IncrementChange}
+            onChange={player2IncrementChange}
           />
         </div>
       </div>

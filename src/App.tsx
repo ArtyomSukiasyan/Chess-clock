@@ -1,7 +1,7 @@
-import { useState, useEffect, ChangeEvent, MouseEvent } from "react";
-import "./App.css";
+import { useState, useEffect, MouseEvent } from "react";
 import Clock from "./components/Clock";
 import ConditionsModal from "./components/ConditionsModal";
+import "./App.css";
 
 function App() {
   const [player1Time, setPlayer1Time] = useState(0);
@@ -12,24 +12,9 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
-  const handlePlayer1TimeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPlayer1Time(parseInt(e.target.value, 10));
-  };
-
-  const handlePlayer2TimeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPlayer2Time(parseInt(e.target.value, 10));
-  };
-
-  const handlePlayer1IncrementChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPlayer1Increment(parseInt(e.target.value, 10));
-  };
-
-  const handlePlayer2IncrementChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPlayer2Increment(parseInt(e.target.value, 10));
-  };
-
   useEffect(() => {
-    let timer: any;
+    let timer: string | number | NodeJS.Timeout | undefined;
+
     if (isRunning) {
       timer = setInterval(() => {
         const isHaveTimes = player1Time > 0 && player2Time > 0;
@@ -76,13 +61,17 @@ function App() {
       {modalIsOpen ? (
         <ConditionsModal
           player1Time={player1Time}
-          handlePlayer1TimeChange={handlePlayer1TimeChange}
+          player1TimeChange={(e) => setPlayer1Time(parseInt(e.target.value))}
           player1Increment={player1Increment}
-          handlePlayer1IncrementChange={handlePlayer1IncrementChange}
+          player1IncrementChange={(e) =>
+            setPlayer1Increment(parseInt(e.target.value))
+          }
           player2Time={player2Time}
-          handlePlayer2TimeChange={handlePlayer2TimeChange}
+          player2TimeChange={(e) => setPlayer2Time(parseInt(e.target.value))}
           player2Increment={player2Increment}
-          handlePlayer2IncrementChange={handlePlayer2IncrementChange}
+          player2IncrementChange={(e) =>
+            setPlayer2Increment(parseInt(e.target.value))
+          }
           closeModal={() => setModalIsOpen(false)}
         />
       ) : (
