@@ -45,7 +45,9 @@ export default function ConditionsModal({
           />
         </div>
       </div>
-      <button onClick={closeModal}>Submit</button>
+      <div>
+        <button onClick={closeModal}>Submit</button>
+      </div>
     </div>
   );
 }
