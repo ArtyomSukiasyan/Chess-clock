@@ -1,13 +1,18 @@
 import { useState, useEffect, MouseEvent } from "react";
 import Clock from "./components/Clock";
 import ConditionsModal from "./components/ConditionsModal";
+import { local } from "./helpers/localStorage";
 import "./App.css";
 
 function App() {
-  const [player1Time, setPlayer1Time] = useState(0);
-  const [player2Time, setPlayer2Time] = useState(0);
-  const [player1Increment, setPlayer1Increment] = useState(0);
-  const [player2Increment, setPlayer2Increment] = useState(0);
+  const [player1Time, setPlayer1Time] = useState(local.get("player1Time"));
+  const [player2Time, setPlayer2Time] = useState(local.get("player2Time"));
+  const [player1Increment, setPlayer1Increment] = useState(
+    local.get("player1Increment")
+  );
+  const [player2Increment, setPlayer2Increment] = useState(
+    local.get("player2Increment")
+  );
   const [activePlayer, setActivePlayer] = useState<"white" | "black">("white");
   const [isRunning, setIsRunning] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(true);
@@ -54,6 +59,18 @@ function App() {
     setIsRunning(false);
     setModalIsOpen(true);
     setActivePlayer("white");
+    setPlayer1Time(local.get("player1Time"));
+    setPlayer1Increment(local.get("player1Increment"));
+    setPlayer2Time(local.get("player2Time"));
+    setPlayer2Increment(local.get("player2Increment"));
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    local.save("player1Time", player1Time);
+    local.save("player1Increment", player1Increment);
+    local.save("player2Time", player2Time);
+    local.save("player2Increment", player2Increment);
   };
 
   return (
@@ -72,7 +89,7 @@ function App() {
           player2IncrementChange={(e) =>
             setPlayer2Increment(Number(e.target.value))
           }
-          closeModal={() => setModalIsOpen(false)}
+          closeModal={closeModal}
         />
       ) : (
         <Clock
