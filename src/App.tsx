@@ -1,4 +1,4 @@
-import { useState, useEffect, MouseEvent } from "react";
+import { useState, useEffect } from "react";
 import Clock from "./components/Clock";
 import ConditionsModal from "./components/ConditionsModal";
 import { local } from "./helpers/localStorage";
@@ -70,7 +70,7 @@ function App() {
     isOver,
   ]);
 
-  const switchPlayer = (e: MouseEvent<HTMLDivElement>) => {
+  const switchPlayer = () => {
     if (isOver) {
       return;
     }
