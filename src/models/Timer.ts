@@ -5,5 +5,5 @@ export interface ITimer {
   switchPlayer: (e: MouseEvent<HTMLDivElement>) => void;
   player: IInitialTime;
   isActive: boolean;
-  id: string;
+  id: "white" | "black";
 }
