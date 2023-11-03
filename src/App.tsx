@@ -75,12 +75,6 @@ function App() {
       return;
     }
 
-    const target = e.target as HTMLDivElement;
-
-    if (target.id !== activePlayer) {
-      return;
-    }
-
     setActivePlayer(activePlayer === "white" ? "black" : "white");
 
     if (!isRunning) {
