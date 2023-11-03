@@ -60,15 +60,7 @@ function App() {
     return () => {
       clearInterval(timer);
     };
-  }, [
-    isRunning,
-    activePlayer,
-    player2.seconds,
-    player1.seconds,
-    player1.minutes,
-    player2.minutes,
-    isOver,
-  ]);
+  }, [isRunning, activePlayer, player2, player1, isOver]);
 
   const switchPlayer = () => {
     if (isOver) {
