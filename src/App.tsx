@@ -3,6 +3,7 @@ import Clock from "./components/Clock";
 import { local } from "./helpers/localStorage";
 import "./App.css";
 import ConditionsModal from "./components/ConditionsModal";
+import { changeTime } from "./helpers/changeTime";
 
 function App() {
   const [player1, setPlayer1] = useState(local.get("player1"));
@@ -31,45 +32,23 @@ function App() {
 
         if (activePlayer === "white") {
           if (player1.seconds - 1 < 0 && player1.minutes > 0) {
-            setPlayer1((prev) => {
-              return {
-                ...prev,
-                minutes: prev.minutes - 1,
-                seconds: 59,
-              };
-            });
+            setPlayer1((prev) => changeTime.decreaseMinutes(prev));
 
             return;
           }
 
-          setPlayer1((prev) => {
-            return {
-              ...prev,
-              seconds: prev.seconds - 1,
-            };
-          });
+          setPlayer1((prev) => changeTime.decreaseSeconds(prev));
 
           return;
         }
 
         if (player2.seconds - 1 < 0 && player2.minutes > 0) {
-          setPlayer2((prev) => {
-            return {
-              ...prev,
-              minutes: prev.minutes - 1,
-              seconds: 59,
-            };
-          });
+          setPlayer2((prev) => changeTime.decreaseMinutes(prev));
 
           return;
         }
-        
-        setPlayer2((prev) => {
-          return {
-            ...prev,
-            seconds: prev.seconds - 1,
-          };
-        });
+
+        setPlayer2((prev) => changeTime.decreaseSeconds(prev));
       }, 1000);
     } else {
       clearInterval(timer);
@@ -107,39 +86,15 @@ function App() {
 
     if (activePlayer === "white") {
       if (player1.seconds + player1.increment > 59) {
-        setPlayer1((prev) => {
-          return {
-            ...prev,
-            minutes:
-              prev.minutes + Math.trunc((prev.seconds + prev.increment) / 60),
-            seconds: (prev.seconds + prev.increment) % 60,
-          };
-        });
+        setPlayer1((prev) => changeTime.increaseMinutes(prev));
       } else {
-        setPlayer1((prev) => {
-          return {
-            ...prev,
-            seconds: prev.seconds + prev.increment,
-          };
-        });
+        setPlayer1((prev) => changeTime.increaseSeconds(prev));
       }
     } else {
       if (player2.seconds + player2.increment > 59) {
-        setPlayer2((prev) => {
-          return {
-            ...prev,
-            minutes:
-              prev.minutes + Math.trunc((prev.seconds + prev.increment) / 60),
-            seconds: (prev.seconds + prev.increment) % 60,
-          };
-        });
+        setPlayer2((prev) => changeTime.increaseMinutes(prev));
       } else {
-        setPlayer2((prev) => {
-          return {
-            ...prev,
-            seconds: prev.seconds + prev.increment,
-          };
-        });
+        setPlayer2((prev) => changeTime.increaseSeconds(prev));
       }
     }
   };
