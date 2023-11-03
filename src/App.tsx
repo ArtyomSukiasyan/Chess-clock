@@ -29,7 +29,7 @@ function App() {
           return;
         }
 
-        if (activePlayer === "white" && isWhiteHasTime) {
+        if (activePlayer === "white") {
           if (player1.seconds - 1 < 0 && player1.minutes > 0) {
             setPlayer1((prev) => {
               return {
@@ -38,32 +38,38 @@ function App() {
                 seconds: 59,
               };
             });
+
             return;
           }
+
           setPlayer1((prev) => {
             return {
               ...prev,
               seconds: prev.seconds - 1,
             };
           });
-        } else if (activePlayer === "black" && isBlackHasTime) {
-          if (player2.seconds - 1 < 0 && player2.minutes > 0) {
-            setPlayer2((prev) => {
-              return {
-                ...prev,
-                minutes: prev.minutes - 1,
-                seconds: 59,
-              };
-            });
-            return;
-          }
+
+          return;
+        }
+
+        if (player2.seconds - 1 < 0 && player2.minutes > 0) {
           setPlayer2((prev) => {
             return {
               ...prev,
-              seconds: prev.seconds - 1,
+              minutes: prev.minutes - 1,
+              seconds: 59,
             };
           });
+
+          return;
         }
+        
+        setPlayer2((prev) => {
+          return {
+            ...prev,
+            seconds: prev.seconds - 1,
+          };
+        });
       }, 1000);
     } else {
       clearInterval(timer);
