@@ -100,16 +100,13 @@ function App() {
     }
 
     if (activePlayer === "white") {
-      if (player1.seconds + player1.increment >= 60) {
+      if (player1.seconds + player1.increment > 59) {
         setPlayer1((prev) => {
           return {
             ...prev,
             minutes:
-              prev.minutes +
-              Math.trunc((player1.seconds + player1.increment) / 60),
-            seconds:
-              prev.seconds +
-              (((player1.seconds + player1.increment) % 60) - 59),
+              prev.minutes + Math.trunc((prev.seconds + prev.increment) / 60),
+            seconds: (prev.seconds + prev.increment) % 60,
           };
         });
       } else {
@@ -121,16 +118,13 @@ function App() {
         });
       }
     } else {
-      if (player2.seconds + player2.increment >= 60) {
+      if (player2.seconds + player2.increment > 59) {
         setPlayer2((prev) => {
           return {
             ...prev,
             minutes:
-              prev.minutes +
-              Math.trunc((player2.seconds + player2.increment) / 60),
-            seconds:
-              prev.seconds +
-              (((player2.seconds + player2.increment) % 60) - 59),
+              prev.minutes + Math.trunc((prev.seconds + prev.increment) / 60),
+            seconds: (prev.seconds + prev.increment) % 60,
           };
         });
       } else {
