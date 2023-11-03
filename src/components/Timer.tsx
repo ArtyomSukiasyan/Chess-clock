@@ -8,7 +8,9 @@ export default function Timer({ switchPlayer, player, isActive, id }: ITimer) {
       onClick={switchPlayer}
     >
       <span className="timer-value">
-        {player.minutes} : {player.seconds}
+        {player.minutes < 10 && "0"}
+        {player.minutes} : {player.seconds < 10 && "0"}
+        {player.seconds}
       </span>
     </div>
   );
