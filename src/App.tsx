@@ -1,9 +1,9 @@
 import { useState, useEffect, MouseEvent } from "react";
 import Clock from "./components/Clock";
-import { local } from "./helpers/localStorage";
-import "./App.css";
 import ConditionsModal from "./components/ConditionsModal";
+import { local } from "./helpers/localStorage";
 import { changeTime } from "./helpers/changeTime";
+import "./App.css";
 
 function App() {
   const [player1, setPlayer1] = useState(local.get("player1"));
@@ -20,39 +20,42 @@ function App() {
       return;
     }
 
-    if (isRunning) {
-      timer = setInterval(() => {
-        const isWhiteHasTime = player1.seconds > 0 || player1.minutes > 0;
-        const isBlackHasTime = player2.seconds > 0 || player2.minutes > 0;
-
-        if (!isWhiteHasTime || !isBlackHasTime) {
-          setIsOver(true);
-          return;
-        }
-
-        if (activePlayer === "white") {
-          if (player1.seconds - 1 < 0 && player1.minutes > 0) {
-            setPlayer1((prev) => changeTime.decreaseMinutes(prev));
-
-            return;
-          }
-
-          setPlayer1((prev) => changeTime.decreaseSeconds(prev));
-
-          return;
-        }
-
-        if (player2.seconds - 1 < 0 && player2.minutes > 0) {
-          setPlayer2((prev) => changeTime.decreaseMinutes(prev));
-
-          return;
-        }
-
-        setPlayer2((prev) => changeTime.decreaseSeconds(prev));
-      }, 1000);
-    } else {
+    if (!isRunning) {
       clearInterval(timer);
+      return;
     }
+
+    timer = setInterval(() => {
+      const isWhiteHasTime = player1.seconds > 0 || player1.minutes > 0;
+      const isBlackHasTime = player2.seconds > 0 || player2.minutes > 0;
+
+      if (!isWhiteHasTime || !isBlackHasTime) {
+        setIsOver(true);
+        setIsRunning(false);
+
+        return;
+      }
+
+      if (activePlayer === "white") {
+        if (player1.seconds - 1 < 0) {
+          setPlayer1((prev) => changeTime.decreaseMinutes(prev));
+
+          return;
+        }
+
+        setPlayer1((prev) => changeTime.decreaseSeconds(prev));
+
+        return;
+      }
+
+      if (player2.seconds - 1 < 0) {
+        setPlayer2((prev) => changeTime.decreaseMinutes(prev));
+
+        return;
+      }
+
+      setPlayer2((prev) => changeTime.decreaseSeconds(prev));
+    }, 1000);
 
     return () => {
       clearInterval(timer);
@@ -87,16 +90,22 @@ function App() {
     if (activePlayer === "white") {
       if (player1.seconds + player1.increment > 59) {
         setPlayer1((prev) => changeTime.increaseMinutes(prev));
-      } else {
-        setPlayer1((prev) => changeTime.increaseSeconds(prev));
+
+        return;
       }
-    } else {
-      if (player2.seconds + player2.increment > 59) {
-        setPlayer2((prev) => changeTime.increaseMinutes(prev));
-      } else {
-        setPlayer2((prev) => changeTime.increaseSeconds(prev));
-      }
+
+      setPlayer1((prev) => changeTime.increaseSeconds(prev));
+
+      return;
     }
+
+    if (player2.seconds + player2.increment > 59) {
+      setPlayer2((prev) => changeTime.increaseMinutes(prev));
+
+      return;
+    }
+
+    setPlayer2((prev) => changeTime.increaseSeconds(prev));
   };
 
   const resetClock = () => {
