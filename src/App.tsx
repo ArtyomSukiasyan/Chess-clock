@@ -1,33 +1,68 @@
 import { useState, useEffect, MouseEvent } from "react";
 import Clock from "./components/Clock";
-import ConditionsModal from "./components/ConditionsModal";
 import { local } from "./helpers/localStorage";
 import "./App.css";
+import ConditionsModal from "./components/ConditionsModal";
 
 function App() {
-  const [player1Time, setPlayer1Time] = useState(local.get("player1Time"));
-  const [player2Time, setPlayer2Time] = useState(local.get("player2Time"));
-  const [player1Increment, setPlayer1Increment] = useState(
-    local.get("player1Increment")
-  );
-  const [player2Increment, setPlayer2Increment] = useState(
-    local.get("player2Increment")
-  );
+  const [player1, setPlayer1] = useState(local.get("player1"));
+  const [player2, setPlayer2] = useState(local.get("player2"));
   const [activePlayer, setActivePlayer] = useState<"white" | "black">("white");
   const [isRunning, setIsRunning] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(true);
+  const [isOver, setIsOver] = useState(false);
 
   useEffect(() => {
     let timer: string | number | NodeJS.Timeout | undefined;
 
+    if (isOver) {
+      return;
+    }
+
     if (isRunning) {
       timer = setInterval(() => {
-        const isHaveTimes = player1Time > 0 && player2Time > 0;
+        const isWhiteHasTime = player1.seconds > 0 || player1.minutes > 0;
+        const isBlackHasTime = player2.seconds > 0 || player2.minutes > 0;
 
-        if (activePlayer === "white" && isHaveTimes) {
-          setPlayer1Time(player1Time - 1);
-        } else if (activePlayer === "black" && isHaveTimes) {
-          setPlayer2Time(player2Time - 1);
+        if (!isWhiteHasTime || !isBlackHasTime) {
+          setIsOver(true);
+          return;
+        }
+
+        if (activePlayer === "white" && isWhiteHasTime) {
+          if (player1.seconds - 1 < 0 && player1.minutes > 0) {
+            setPlayer1((prev) => {
+              return {
+                ...prev,
+                minutes: prev.minutes - 1,
+                seconds: 59,
+              };
+            });
+            return;
+          }
+          setPlayer1((prev) => {
+            return {
+              ...prev,
+              seconds: prev.seconds - 1,
+            };
+          });
+        } else if (activePlayer === "black" && isBlackHasTime) {
+          if (player2.seconds - 1 < 0 && player2.minutes > 0) {
+            setPlayer2((prev) => {
+              return {
+                ...prev,
+                minutes: prev.minutes - 1,
+                seconds: 59,
+              };
+            });
+            return;
+          }
+          setPlayer2((prev) => {
+            return {
+              ...prev,
+              seconds: prev.seconds - 1,
+            };
+          });
         }
       }, 1000);
     } else {
@@ -37,69 +72,109 @@ function App() {
     return () => {
       clearInterval(timer);
     };
-  }, [isRunning, activePlayer, player1Time, player2Time]);
+  }, [
+    isRunning,
+    activePlayer,
+    player2.seconds,
+    player1.seconds,
+    player1.minutes,
+    player2.minutes,
+    isOver,
+  ]);
 
   const switchPlayer = (e: MouseEvent<HTMLDivElement>) => {
+    if (isOver) {
+      return;
+    }
+
     const target = e.target as HTMLDivElement;
 
     if (target.id !== activePlayer) {
       return;
     }
 
-    if (activePlayer === "white") {
-      setPlayer1Time((prev) => prev + player1Increment);
-    } else {
-      setPlayer2Time((prev) => prev + player2Increment);
+    setActivePlayer(activePlayer === "white" ? "black" : "white");
+
+    if (!isRunning) {
+      return;
     }
 
-    setActivePlayer(activePlayer === "white" ? "black" : "white");
+    if (activePlayer === "white") {
+      if (player1.seconds + player1.increment >= 60) {
+        setPlayer1((prev) => {
+          return {
+            ...prev,
+            minutes:
+              prev.minutes +
+              Math.trunc((player1.seconds + player1.increment) / 60),
+            seconds:
+              prev.seconds +
+              (((player1.seconds + player1.increment) % 60) - 59),
+          };
+        });
+      } else {
+        setPlayer1((prev) => {
+          return {
+            ...prev,
+            seconds: prev.seconds + prev.increment,
+          };
+        });
+      }
+    } else {
+      if (player2.seconds + player2.increment >= 60) {
+        setPlayer2((prev) => {
+          return {
+            ...prev,
+            minutes:
+              prev.minutes +
+              Math.trunc((player2.seconds + player2.increment) / 60),
+            seconds:
+              prev.seconds +
+              (((player2.seconds + player2.increment) % 60) - 59),
+          };
+        });
+      } else {
+        setPlayer2((prev) => {
+          return {
+            ...prev,
+            seconds: prev.seconds + prev.increment,
+          };
+        });
+      }
+    }
   };
 
   const resetClock = () => {
     setIsRunning(false);
     setModalIsOpen(true);
     setActivePlayer("white");
-    setPlayer1Time(local.get("player1Time"));
-    setPlayer1Increment(local.get("player1Increment"));
-    setPlayer2Time(local.get("player2Time"));
-    setPlayer2Increment(local.get("player2Increment"));
   };
 
   const closeModal = () => {
+    local.save("player1", player1);
+    local.save("player2", player2);
     setModalIsOpen(false);
-    local.save("player1Time", player1Time);
-    local.save("player1Increment", player1Increment);
-    local.save("player2Time", player2Time);
-    local.save("player2Increment", player2Increment);
   };
 
   return (
     <div>
       {modalIsOpen ? (
         <ConditionsModal
-          player1Time={player1Time}
-          player1TimeChange={(e) => setPlayer1Time(Number(e.target.value))}
-          player1Increment={player1Increment}
-          player1IncrementChange={(e) =>
-            setPlayer1Increment(Number(e.target.value))
-          }
-          player2Time={player2Time}
-          player2TimeChange={(e) => setPlayer2Time(Number(e.target.value))}
-          player2Increment={player2Increment}
-          player2IncrementChange={(e) =>
-            setPlayer2Increment(Number(e.target.value))
-          }
+          player1={player1}
+          player2={player2}
+          player1TimeChange={setPlayer1}
+          player2TimeChange={setPlayer2}
           closeModal={closeModal}
         />
       ) : (
         <Clock
           activePlayer={activePlayer}
-          player1Time={player1Time}
-          player2Time={player2Time}
-          switchPlayer={switchPlayer}
-          resetClock={resetClock}
-          toggleClock={() => setIsRunning(!isRunning)}
           isRunning={isRunning}
+          toggleClock={() => setIsRunning(!isRunning)}
+          player1={player1}
+          player2={player2}
+          resetClock={resetClock}
+          switchPlayer={switchPlayer}
         />
       )}
     </div>

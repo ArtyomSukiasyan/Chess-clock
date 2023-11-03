@@ -1,9 +1,14 @@
-function get(name: string) {
-  return Number(localStorage.getItem(name) || 0);
+import { initialTime } from "../constants/initialTime";
+import { IInitialTime } from "../models/InitialTime";
+
+function get(player: "player1" | "player2"): IInitialTime {
+  const localValue = localStorage.getItem(player);
+
+  return localValue ? JSON.parse(localValue) : initialTime;
 }
 
-function save(name: string, value: number) {
-  localStorage.setItem(name, JSON.stringify(value));
+function save(player: "player1" | "player2", value: IInitialTime) {
+  localStorage.setItem(player, JSON.stringify(value));
 }
 
 export const local = { get, save };

@@ -1,13 +1,10 @@
-import { ChangeEvent } from "react";
+import { Dispatch, SetStateAction } from "react";
+import { IInitialTime } from "./InitialTime";
 
 export interface IConditionsModal {
-  player1Time: number;
-  player1TimeChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  player1Increment: number;
-  player1IncrementChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  player2Time: number;
-  player2TimeChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  player2Increment: number;
-  player2IncrementChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  player1: IInitialTime;
+  player1TimeChange: Dispatch<SetStateAction<IInitialTime>>;
+  player2: IInitialTime;
+  player2TimeChange: Dispatch<SetStateAction<IInitialTime>>;
   closeModal: () => void;
 }

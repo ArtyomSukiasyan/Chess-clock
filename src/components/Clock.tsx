@@ -4,8 +4,8 @@ import { IClock } from "../models/Clock";
 
 export default function Clock({
   activePlayer,
-  player1Time,
-  player2Time,
+  player1,
+  player2,
   switchPlayer,
   toggleClock,
   resetClock,
@@ -15,9 +15,9 @@ export default function Clock({
     <div className="clock">
       <Timer
         id="white"
-        switchPlayer={switchPlayer}
-        playerTime={player1Time}
         isActive={activePlayer === "white"}
+        player={player1}
+        switchPlayer={switchPlayer}
       />
 
       <Buttons
@@ -25,12 +25,11 @@ export default function Clock({
         resetClock={resetClock}
         toggleClock={toggleClock}
       />
-
       <Timer
         id="black"
-        switchPlayer={switchPlayer}
-        playerTime={player2Time}
         isActive={activePlayer === "black"}
+        player={player2}
+        switchPlayer={switchPlayer}
       />
     </div>
   );
