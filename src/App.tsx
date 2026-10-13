@@ -14,7 +14,7 @@ function App() {
   const [isOver, setIsOver] = useState(false);
 
   useEffect(() => {
-    let timer: string | number | NodeJS.Timeout | undefined;
+    let timer: ReturnType<typeof setInterval> | undefined;
 
     if (isOver) {
       return;
