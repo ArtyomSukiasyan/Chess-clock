@@ -8,5 +8,6 @@ export interface IClock {
   switchPlayer: (e: MouseEvent<HTMLDivElement>) => void;
   toggleClock: () => void;
   resetClock: () => void;
+  restartClock: () => void;
   isRunning: boolean;
 }

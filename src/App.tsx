@@ -96,7 +96,16 @@ function App() {
 
   const resetClock = () => {
     setIsRunning(false);
+    setIsOver(false);
     setModalIsOpen(true);
+    setActivePlayer("white");
+  };
+
+  const restartClock = () => {
+    setPlayer1(local.get("player1"));
+    setPlayer2(local.get("player2"));
+    setIsRunning(false);
+    setIsOver(false);
     setActivePlayer("white");
   };
 
@@ -124,6 +133,7 @@ function App() {
           player1={player1}
           player2={player2}
           resetClock={resetClock}
+          restartClock={restartClock}
           switchPlayer={switchPlayer}
         />
       )}

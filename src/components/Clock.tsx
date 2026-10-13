@@ -9,6 +9,7 @@ export default function Clock({
   switchPlayer,
   toggleClock,
   resetClock,
+  restartClock,
   isRunning,
 }: IClock) {
   return (
@@ -23,6 +24,7 @@ export default function Clock({
       <Buttons
         isRunning={isRunning}
         resetClock={resetClock}
+        restartClock={restartClock}
         toggleClock={toggleClock}
       />
       <Timer

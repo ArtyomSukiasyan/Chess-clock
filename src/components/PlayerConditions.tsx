@@ -3,49 +3,35 @@ import { IPlayerConditions } from "../models/PlayerConditions";
 
 export default function PlayerConditions({
   player,
-  playerName,
+  title,
+  side,
   onChange,
 }: IPlayerConditions) {
   return (
-    <div className="player-conditions">
-      <h2>{playerName}</h2>
+    <section className="card">
+      <h2 className="card-title">
+        {side && <span className={`side-dot side-dot--${side}`} />}
+        {title}
+      </h2>
       <TimeInput
-        text="Initial time (minutes):"
+        text="Minutes"
         value={player.minutes}
-        onChange={(e) =>
-          onChange((prev) => {
-            return {
-              ...prev,
-              minutes: Number(e.target.value),
-            };
-          })
-        }
+        max={180}
+        onChange={(minutes) => onChange({ ...player, minutes })}
       />
       <TimeInput
-        text="Initial time (sec):"
+        text="Seconds"
         value={player.seconds}
-        onChange={(e) =>
-          onChange((prev) => {
-            return {
-              ...prev,
-              seconds: Number(e.target.value),
-            };
-          })
-        }
+        max={59}
+        step={5}
+        onChange={(seconds) => onChange({ ...player, seconds })}
       />
-
       <TimeInput
-        text="Increment (sec):"
+        text="Increment (sec)"
         value={player.increment}
-        onChange={(e) =>
-          onChange((prev) => {
-            return {
-              ...prev,
-              increment: Number(e.target.value),
-            };
-          })
-        }
+        max={60}
+        onChange={(increment) => onChange({ ...player, increment })}
       />
-    </div>
+    </section>
   );
 }

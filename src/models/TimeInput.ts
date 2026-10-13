@@ -1,7 +1,7 @@
-import { ChangeEvent } from "react";
-
 export interface ITimeInput {
   text: string;
   value: number;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  max: number;
+  step?: number;
+  onChange: (value: number) => void;
 }
