@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Chess Clock",
+    "slug": "chess-clock",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.artyomsukiasyan.chessclock"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#f1f3fa",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.artyomsukiasyan.chessclock"
+    },
+    "backgroundColor": "#f1f3fa"
+  }
+}
