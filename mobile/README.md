@@ -27,3 +27,22 @@ EXPO_PUBLIC_WEB_URL=http://192.168.1.10:5173 npx expo start
 
 - The screen is kept awake while the app is open (`expo-keep-awake`).
 - Saved time controls persist via the WebView's `localStorage`.
+
+## Deploy to Google Play
+
+The app is linked to the EAS project `@chess_arbiter/chess-clock` (package `com.chess_arbiter.chessclock`).
+The web app is rebuilt on the EAS server by the `eas-build-post-install` hook, so `src/webApp.ts` doesn't need to be committed.
+
+```bash
+npm run build:android    # production .aab on EAS; versionCode is auto-incremented
+npm run submit:android   # uploads the latest build to Google Play (internal track)
+```
+
+First release only:
+
+1. On the first `build:android`, let EAS generate and store the Android keystore.
+2. Create the app in Google Play Console and upload that first `.aab` manually — Google doesn't allow API uploads for a brand-new app.
+3. For `submit:android`, add a Google service account key in the EAS dashboard
+   (Project → Credentials → Android → Google Service Account Key). See https://docs.expo.dev/submit/android/.
+
+Bump `version` in `app.json` for each new store release.
