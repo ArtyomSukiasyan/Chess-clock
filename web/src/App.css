@@ -348,11 +348,16 @@ button:disabled {
 
 .timer-value {
   /* As large as fits the timer half: limited by width on phones, by height on short screens */
-  font-size: min(30vw, 24dvh);
-  font-weight: 600;
+  font-size: min(38vw, 30dvh);
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
   letter-spacing: -0.02em;
+}
+
+/* 100+ minutes adds a digit, so shrink to keep it within the screen width */
+.timer-value--long {
+  font-size: min(30vw, 24dvh);
 }
 
 .timer-value--flipped {

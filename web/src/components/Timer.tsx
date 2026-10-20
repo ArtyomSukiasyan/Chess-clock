@@ -9,7 +9,15 @@ export default function Timer({ switchPlayer, player, isActive, id }: ITimer) {
       className={`timer ${isActive ? "active" : ""}`}
       onClick={isActive ? switchPlayer : () => {}}
     >
-      <span className={`timer-value ${id === "white" ? "timer-value--flipped" : ""}`}>
+      <span
+        className={[
+          "timer-value",
+          player.minutes >= 100 && "timer-value--long",
+          id === "white" && "timer-value--flipped",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         {pad(player.minutes)}:{pad(player.seconds)}
       </span>
     </div>
