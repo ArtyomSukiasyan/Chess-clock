@@ -95,6 +95,8 @@ function App() {
   };
 
   const resetClock = () => {
+    setPlayer1(local.get("player1"));
+    setPlayer2(local.get("player2"));
     setIsRunning(false);
     setIsOver(false);
     setModalIsOpen(true);
