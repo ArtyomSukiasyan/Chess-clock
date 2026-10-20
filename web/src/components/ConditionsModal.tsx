@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IConditionsModal } from "../models/ConditionsModal";
 import { IInitialTime } from "../models/InitialTime";
 import { presets } from "../constants/presets";
@@ -20,6 +20,20 @@ export default function ConditionsModal({
   closeModal,
 }: IConditionsModal) {
   const [sameForBoth, setSameForBoth] = useState(isSameTime(player1, player2));
+  const shouldRevealCards = useRef(false);
+
+  // After switching to separate times, scroll down so both color cards are fully visible
+  useEffect(() => {
+    if (sameForBoth || !shouldRevealCards.current) {
+      return;
+    }
+
+    shouldRevealCards.current = false;
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [sameForBoth]);
 
   const setBoth = (value: IInitialTime) => {
     player1TimeChange(value);
@@ -27,7 +41,9 @@ export default function ConditionsModal({
   };
 
   const toggleSameForBoth = () => {
-    if (!sameForBoth) {
+    if (sameForBoth) {
+      shouldRevealCards.current = true;
+    } else {
       player2TimeChange(player1);
     }
 
