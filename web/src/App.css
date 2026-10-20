@@ -335,7 +335,6 @@ button:disabled {
   flex: 1;
   min-height: 0;
   width: 100%;
-  font-size: 24px;
   user-select: none;
   border: 2px solid var(--color-border);
   cursor: pointer;
@@ -348,6 +347,15 @@ button:disabled {
 }
 
 .timer-value {
+  /* As large as fits the timer half: limited by width on phones, by height on short screens */
+  font-size: min(30vw, 24dvh);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.timer-value--flipped {
   transform: rotate(180deg);
 }
 
