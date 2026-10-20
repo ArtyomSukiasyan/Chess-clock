@@ -23,7 +23,6 @@ export default function PlayerConditions({
         text="Seconds"
         value={player.seconds}
         max={59}
-        step={5}
         onChange={(seconds) => onChange({ ...player, seconds })}
       />
       <TimeInput
