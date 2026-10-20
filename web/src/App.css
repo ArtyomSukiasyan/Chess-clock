@@ -256,6 +256,62 @@ button:disabled {
   opacity: 0.4;
 }
 
+/* Short screens: small phones, where the status and navigation bars leave little height for the app */
+@media (max-height: 640px) {
+  .setup {
+    padding-top: 12px;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    gap: 8px;
+  }
+
+  .setup-header p {
+    display: none;
+  }
+
+  .preset {
+    min-height: 44px;
+    padding: 4px;
+  }
+
+  .preset-time {
+    font-size: 16px;
+  }
+
+  .preset-category {
+    font-size: 11px;
+  }
+
+  .section-row {
+    margin-top: 0;
+  }
+
+  .card-title {
+    padding: 4px 0;
+  }
+
+  .stepper {
+    padding: 2px 0;
+  }
+
+  .stepper-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stepper-input {
+    height: 40px;
+  }
+
+  .setup-footer {
+    padding-top: 8px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+
+  .start-btn {
+    height: 48px;
+  }
+}
+
 /* Clock screen */
 
 .clock,
