@@ -353,8 +353,8 @@ button:disabled {
   height: 100dvh;
   overflow: hidden;
   /* Keep the timers clear of the system navigation bar (back/home buttons) */
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    var(--safe-area-bottom) env(safe-area-inset-left);
+  padding: var(--safe-area-top) var(--safe-area-right) var(--safe-area-bottom)
+    var(--safe-area-left);
 }
 
 .timer {

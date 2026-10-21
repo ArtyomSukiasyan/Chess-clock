@@ -15,6 +15,9 @@ const devUrl = process.env.EXPO_PUBLIC_WEB_URL;
 // A stable origin keeps localStorage (saved time controls) between launches
 const source = devUrl ? { uri: devUrl } : { html: webAppHtml, baseUrl: "https://chess-clock-amber.vercel.app" };
 
+// The native layout already keeps the page clear of the system bars; this tells the page not to add that space again
+const markInApp = `document.documentElement.classList.add("in-app"); true;`;
+
 function Screen() {
   const { bottom } = useSafeAreaInsets();
 
@@ -26,6 +29,8 @@ function Screen() {
       <WebView
         style={styles.webview}
         source={source}
+        injectedJavaScriptBeforeContentLoaded={markInApp}
+        injectedJavaScript={markInApp}
         originWhitelist={["*"]}
         domStorageEnabled
         bounces={false}

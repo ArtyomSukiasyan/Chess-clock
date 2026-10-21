@@ -11,8 +11,19 @@
   --color-gold: #d4a72c;
   --radius: 16px;
   --shadow: 0 1px 2px rgb(26 17 70 / 6%), 0 4px 16px rgb(26 17 70 / 6%);
-  /* Height of the bottom system bar; the mobile app overrides it with the real value */
+  /* Space taken by system bars. The mobile app already keeps the page clear of them,
+     so it sets these to 0 to avoid adding the same space twice */
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+}
+
+:root.in-app {
+  --safe-area-top: 0px;
+  --safe-area-right: 0px;
+  --safe-area-bottom: 0px;
+  --safe-area-left: 0px;
 }
 
 * {
