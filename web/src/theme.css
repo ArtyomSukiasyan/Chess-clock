@@ -10,6 +10,8 @@
   --color-border: #333;
   --radius: 16px;
   --shadow: 0 1px 2px rgb(26 17 70 / 6%), 0 4px 16px rgb(26 17 70 / 6%);
+  /* Height of the bottom system bar; the mobile app overrides it with the real value */
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 * {
