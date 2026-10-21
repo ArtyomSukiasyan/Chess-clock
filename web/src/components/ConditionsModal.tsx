@@ -12,6 +12,9 @@ const isSameTime = (a: IInitialTime, b: IInitialTime) =>
 const hasTime = (player: IInitialTime) =>
   player.minutes > 0 || player.seconds > 0;
 
+// Matches the .collapsible transition in App.css
+const COLLAPSE_MS = 350;
+
 export default function ConditionsModal({
   player1,
   player1TimeChange,
@@ -20,7 +23,11 @@ export default function ConditionsModal({
   closeModal,
 }: IConditionsModal) {
   const [sameForBoth, setSameForBoth] = useState(isSameTime(player1, player2));
+  const [isCollapsing, setIsCollapsing] = useState(false);
   const shouldRevealCards = useRef(false);
+  const collapseTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  useEffect(() => () => clearTimeout(collapseTimer.current), []);
 
   // After switching to separate times, scroll down so both color cards are fully visible
   useEffect(() => {
@@ -41,13 +48,25 @@ export default function ConditionsModal({
   };
 
   const toggleSameForBoth = () => {
-    if (sameForBoth) {
-      shouldRevealCards.current = true;
-    } else {
-      player2TimeChange(player1);
+    if (isCollapsing) {
+      return;
     }
 
-    setSameForBoth(!sameForBoth);
+    if (sameForBoth) {
+      shouldRevealCards.current = true;
+      setSameForBoth(false);
+
+      return;
+    }
+
+    // Mirror the reveal: scroll back up while the Black card folds away, then merge the cards
+    setIsCollapsing(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    collapseTimer.current = setTimeout(() => {
+      player2TimeChange(player1);
+      setSameForBoth(true);
+      setIsCollapsing(false);
+    }, COLLAPSE_MS);
   };
 
   const canStart = hasTime(player1) && hasTime(player2);
@@ -89,7 +108,7 @@ export default function ConditionsModal({
         <label className="switch">
           <input
             type="checkbox"
-            checked={sameForBoth}
+            checked={sameForBoth || isCollapsing}
             onChange={toggleSameForBoth}
           />
           <span className="switch-track" />
@@ -111,12 +130,18 @@ export default function ConditionsModal({
             player={player1}
             onChange={player1TimeChange}
           />
-          <PlayerConditions
-            title="Black"
-            side="black"
-            player={player2}
-            onChange={player2TimeChange}
-          />
+          <div
+            className={`collapsible ${isCollapsing ? "collapsible--closed" : ""}`}
+          >
+            <div className="collapsible-inner">
+              <PlayerConditions
+                title="Black"
+                side="black"
+                player={player2}
+                onChange={player2TimeChange}
+              />
+            </div>
+          </div>
         </>
       )}
 

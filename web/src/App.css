@@ -20,9 +20,10 @@ button:disabled {
   min-height: 100dvh;
   margin: 0 auto;
   padding: 16px 16px calc(88px + var(--safe-area-bottom));
+  --setup-gap: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--setup-gap);
 }
 
 .setup-header h1 {
@@ -224,6 +225,30 @@ button:disabled {
   border-color: var(--color-primary);
 }
 
+/* Folds the Black card away before the cards merge back into one */
+.collapsible {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 0.35s ease,
+    opacity 0.25s ease,
+    margin-top 0.35s ease;
+}
+
+.collapsible-inner {
+  min-height: 0;
+}
+
+.collapsible--closed {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: calc(-1 * var(--setup-gap));
+}
+
+.collapsible--closed .collapsible-inner {
+  overflow: hidden;
+}
+
 .setup-footer {
   position: fixed;
   left: 0;
@@ -261,7 +286,7 @@ button:disabled {
   .setup {
     padding-top: 12px;
     padding-bottom: calc(72px + var(--safe-area-bottom));
-    gap: 8px;
+    --setup-gap: 8px;
   }
 
   .setup-header p {
