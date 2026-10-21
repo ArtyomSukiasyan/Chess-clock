@@ -8,6 +8,7 @@
   --color-muted: #6b6a80;
   --color-line: #e2e1ec;
   --color-border: #333;
+  --color-gold: #d4a72c;
   --radius: 16px;
   --shadow: 0 1px 2px rgb(26 17 70 / 6%), 0 4px 16px rgb(26 17 70 / 6%);
   /* Height of the bottom system bar; the mobile app overrides it with the real value */
