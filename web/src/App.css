@@ -355,12 +355,6 @@ button:disabled {
   /* Keep the timers clear of the system navigation bar (back/home buttons) */
   padding: env(safe-area-inset-top) env(safe-area-inset-right)
     var(--safe-area-bottom) env(safe-area-inset-left);
-  background-color: var(--color-surface);
-}
-
-/* The strip under the navigation bar takes the lower timer's color, so it reads as part of it */
-.clock:has(> .timer:last-child.active) {
-  background-color: var(--color-primary);
 }
 
 .timer {

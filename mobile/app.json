@@ -32,6 +32,15 @@
         "projectId": "a976cf77-8afe-44b9-acce-5df60a31ff95"
       }
     },
-    "owner": "chess_arbiter"
+    "owner": "chess_arbiter",
+    "plugins": [
+      [
+        "expo-navigation-bar",
+        {
+          "style": "light",
+          "enforceContrast": false
+        }
+      ]
+    ]
   }
 }
