@@ -3,6 +3,7 @@ import { IConditionsModal } from "../models/ConditionsModal";
 import { IInitialTime } from "../models/InitialTime";
 import { presets } from "../constants/presets";
 import PlayerConditions from "./PlayerConditions";
+import TimeInput from "./TimeInput";
 
 const isSameTime = (a: IInitialTime, b: IInitialTime) =>
   a.minutes === b.minutes &&
@@ -20,6 +21,8 @@ export default function ConditionsModal({
   player1TimeChange,
   player2,
   player2TimeChange,
+  incrementRule,
+  incrementRuleChange,
   closeModal,
 }: IConditionsModal) {
   const [sameForBoth, setSameForBoth] = useState(isSameTime(player1, player2));
@@ -144,6 +147,43 @@ export default function ConditionsModal({
           </div>
         </>
       )}
+
+      <section className="card">
+        <div className="rule-row">
+          <div>
+            <h2 className="card-title">Increment after move</h2>
+            <p className="rule-hint">
+              {incrementRule.enabled
+                ? `No increment until move ${incrementRule.afterMove + 1}`
+                : "Like Armageddon: no increment early in the game"}
+            </p>
+          </div>
+          <label className="switch">
+            <input
+              type="checkbox"
+              aria-label="Increment after move"
+              checked={incrementRule.enabled}
+              onChange={() =>
+                incrementRuleChange((prev) => ({
+                  ...prev,
+                  enabled: !prev.enabled,
+                }))
+              }
+            />
+            <span className="switch-track" />
+          </label>
+        </div>
+        {incrementRule.enabled && (
+          <TimeInput
+            text="After move"
+            value={incrementRule.afterMove}
+            max={200}
+            onChange={(afterMove) =>
+              incrementRuleChange((prev) => ({ ...prev, afterMove }))
+            }
+          />
+        )}
+      </section>
 
       <div className="setup-footer">
         <button

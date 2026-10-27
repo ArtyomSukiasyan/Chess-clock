@@ -12,6 +12,9 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(true);
   const [isOver, setIsOver] = useState(false);
+  const [incrementRule, setIncrementRule] = useState(local.getIncrementRule());
+  // Completed moves per player, for the delayed increment rule
+  const [moves, setMoves] = useState({ white: 0, black: 0 });
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | undefined;
@@ -73,6 +76,14 @@ function App() {
       return;
     }
 
+    const moveNumber = moves[activePlayer] + 1;
+    setMoves((prev) => ({ ...prev, [activePlayer]: moveNumber }));
+
+    // With the delayed rule on, moves up to and including `afterMove` get no increment
+    if (incrementRule.enabled && moveNumber <= incrementRule.afterMove) {
+      return;
+    }
+
     if (activePlayer === "white") {
       if (player1.seconds + player1.increment > 59) {
         setPlayer1((prev) => changeTime.increaseMinutes(prev));
@@ -101,6 +112,7 @@ function App() {
     setIsOver(false);
     setModalIsOpen(true);
     setActivePlayer("white");
+    setMoves({ white: 0, black: 0 });
   };
 
   const restartClock = () => {
@@ -109,11 +121,14 @@ function App() {
     setIsRunning(false);
     setIsOver(false);
     setActivePlayer("white");
+    setMoves({ white: 0, black: 0 });
   };
 
   const closeModal = () => {
     local.save("player1", player1);
     local.save("player2", player2);
+    local.saveIncrementRule(incrementRule);
+    setMoves({ white: 0, black: 0 });
     setModalIsOpen(false);
   };
 
@@ -125,6 +140,8 @@ function App() {
           player2={player2}
           player1TimeChange={setPlayer1}
           player2TimeChange={setPlayer2}
+          incrementRule={incrementRule}
+          incrementRuleChange={setIncrementRule}
           closeModal={closeModal}
         />
       ) : (

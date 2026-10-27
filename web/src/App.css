@@ -225,6 +225,23 @@ button:disabled {
   border-color: var(--color-primary);
 }
 
+.rule-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.rule-row .card-title {
+  padding: 0;
+}
+
+.rule-hint {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
 /* Folds the Black card away before the cards merge back into one */
 .collapsible {
   display: grid;
